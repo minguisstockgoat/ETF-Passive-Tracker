@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+data/*.log
+data/*.db-wal
+data/*.db-shm
+.krx_cache/
+scratchpad/
+# 스냅샷 DB(data/etf.db)와 docs/ 는 커밋 대상 (Pages 배포 + 이력 유지)

@@ -1,0 +1,47 @@
+name: refresh
+
+# 평일 아침(KST) 최신 구성종목 수집 -> 정적 데이터 재생성 -> 커밋
+# (모두 공개 엔드포인트라 시크릿 불필요)
+on:
+  schedule:
+    - cron: "40 23 * * 0-4"   # 23:40 UTC = 익일 08:40 KST (월~금)
+  workflow_dispatch:            # 수동 실행 버튼
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: pip install requests beautifulsoup4
+
+      - name: Ingest latest business day
+        run: python ingest.py --latest
+        continue-on-error: true   # 특정 운용사 일시 오류가 있어도 빌드는 진행
+
+      - name: Build static site
+        run: python build_static.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/etf.db docs
+          if git diff --cached --quiet; then
+            echo "변경 없음 - 커밋 생략"
+          else
+            git commit -m "chore: auto refresh $(date -u +%Y-%m-%d)"
+            git push
+          fi
