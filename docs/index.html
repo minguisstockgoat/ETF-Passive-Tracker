@@ -1,37 +1,6 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>패시브 ETF 구성비중 트래커</title>
-<link rel="stylesheet" href="style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E">
-</head>
-<body>
-<header class="topbar">
-  <div class="topbar-inner">
-    <a class="brand" href="#/">
-      <span class="brand-mark">📊</span>
-      <span class="brand-txt">패시브 ETF 구성비중 트래커</span>
-    </a>
-    <nav class="crumbs" id="crumbs"></nav>
-    <div class="topbar-right">
-      <span class="asof" id="asof"></span>
-      <button class="btn-refresh" id="refreshBtn" title="최신 영업일 재수집">
-        <span class="refresh-ico">↻</span><span class="refresh-txt">갱신</span>
-      </button>
-    </div>
-  </div>
-</header>
-
-<main id="app" class="app">
-  <div class="loading">불러오는 중…</div>
-</main>
-
-<footer class="foot">
-  <span>구성종목(PDF) 출처 · SOL(신한)/RISE(KB)/TIGER(미래에셋) 공식 공시 데이터</span>
-</footer>
-
-<script src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ETF 리밸런싱 통합본으로 이동</title><link rel="canonical" href="https://minguisstockgoat.github.io/passive-etf-dashboard/"><style>body{font-family:system-ui,sans-serif;max-width:620px;margin:15vh auto;padding:24px;line-height:1.8;background:#f3f7f8;color:#18343e}a{color:#247b7d}</style></head><body><h1>ETF 대시보드를 하나로 통합했습니다.</h1><p>정기변경 일정·비중 제한·일간 구성 변화·기존 관심 ETF 20종을 함께 확인할 수 있습니다.</p><p><a id="go" href="https://minguisstockgoat.github.io/passive-etf-dashboard/daily.html?watch=1">ETF 리밸런싱 통합본 열기 →</a></p><script>
+const base='https://minguisstockgoat.github.io/passive-etf-dashboard/';
+const etf=location.hash.match(/^#\/etf\/([A-Za-z0-9]{6})$/),manager=location.hash.match(/^#\/manager\/([A-Za-z]+)$/);
+const target=etf?base+'etf.html?ticker='+encodeURIComponent(etf[1])+'#daily-changes':manager?base+'daily.html?manager='+encodeURIComponent(manager[1]):base+'daily.html?watch=1';
+document.getElementById('go').href=target;location.replace(target);
+</script></body></html>
